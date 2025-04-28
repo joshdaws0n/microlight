@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+{{ partial "head.html" . }}
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="sticky-sidebar px-0 pt-0" id="sidebar">
+        <div class="sticky-sidebar border-end">
+          {{ partial "sidebar.html" . }}
+        </div>
+      </div>
+      <div class="col col-md-8 col-lg-5 col-xl-4 pt-3" id="content">
+        <!-- Lightbox container -->
+        <div id="lightbox">
+          <div id="lightbox-container" class="lightbox-container">
+            <button id="prev-btn" class="btn btn-primary">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <img id="lightbox-image" src="" alt="">
+            <button id="next-btn" class="btn btn-primary">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+        {{ block "main" . }}{{ end }}
+      </div>
+    </div>
+  </div>
+  {{ range .Site.Params.plugins_js }}
+  <script src="{{ . }}"></script>
+  {{ end }}
+  <script src="https://unpkg.com/imagesloaded@5.0.0/imagesloaded.pkgd.min.js"></script>
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  <script src="https://kit.fontawesome.com/f9bfe062c6.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    {{ with .Site.Params.lastfmUsername }}
+    {{ if ne . "" }}
+      <script>
+        const lastfmUsername = "{{ . }}";
+      </script>
+      {{ with $.Site.Params.apiKey }}
+      {{ if ne . "" }}
+        <script>
+          const lastfmApiKey = "{{ . }}";
+        </script>
+        <script src="{{ "js/lastfm.js" | relURL }}"></script>
+        {{ end }}
+        {{ end }}
+    {{ end }}
+    {{ end }}
+  <!-- <script src="{{ "js/search.js" | relURL }}"></script> -->
+  <script src="{{ "js/archive.js" | relURL }}"></script>
+  <script src="{{ "js/hamburger.js" | relURL }}"></script>
+  <script src="{{ "js/lightbox.js" | relURL }}"></script>
+  <script src="{{ "js/masonry.js" | relURL }}"></script>
+</body>
+
+</html>

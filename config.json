@@ -1,0 +1,25 @@
+{
+    "params": {
+        "metaDescription": "A blog running on Micro.blog",
+        "showTagline": true,
+        "paginateReplies": true,
+        "tagline": "Modern art makes me want to rock out",
+        "letterboxdUsername": "",
+        "lastfmUsername": "",
+        "apiKey": "",
+        "blueskyUsername": "",
+        "threadsUsername": "",
+        "pixelfedLink": "",
+        "tumblrUrl": "",
+        "showCrossposts": true,
+        "showCrosspostsPermalink": true,
+        "categoriesOnPosts": true,
+        "showReadingTime": false,
+        "truncatePostsOnIndex": true,
+        "truncatePostsCharLimit": 250,
+        "categoriesFullImgsHome": [
+            "Blog"
+        ],
+        "categoriesIgnorePhotosPage":[]
+    }
+}

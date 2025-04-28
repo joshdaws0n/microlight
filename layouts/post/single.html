@@ -1,0 +1,113 @@
+{{ define "main" }}
+<div class="card mb-3 perma rounded-0 ms-0">
+  <div class="card-body">
+    {{ if .Title }}
+    <h5 class="card-title">{{ .Title }}</h5>
+    {{ end }}
+    <div class="mb-3">
+      <p class="post-meta mb-1">
+        <i class="fa-regular fa-calendar"></i>
+        <time class="dt-published ms-1" datetime="{{ .Date.Format " 2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+      </p>
+      {{ if .Site.Params.showReadingTime }}
+      <p class="reading-time mb-2">
+        <i class="fa-solid fa-stopwatch"></i>
+        {{ $readingTime := .ReadingTime }}
+
+        {{ if eq $readingTime 1 }}
+            {{ $readingTime }} minute to read
+        {{ else }}
+            {{ $readingTime }} minutes to read
+        {{ end }}
+      </p>
+      {{ end }}
+      <p class="post-tags mb-1">
+        <i class="fa-solid fa-tag me-1"></i>
+        {{ $baseURL := .Site.BaseURL }}
+        {{ range .Params.Categories }}
+        <a href="{{ $baseURL }}/categories/{{ . | urlize }}" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">{{ . }}</a>
+        {{ end }}
+      </p>
+      {{ if .Site.Params.showCrossPostsPermalink }}
+      {{ if or .Params.bluesky .Params.mastodon .Params.pixelfed .Params.threads .Params.tumblr }}
+      <p class="crosspost-locations mb-1">
+        <i class="fa-solid fa-share-nodes me-1"></i>
+        {{ if .Params.bluesky }}
+        <a {{ printf "href=%q" .Params.bluesky.link | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
+          Bluesky
+        </a>
+        {{ end }}
+        {{ if .Params.mastodon }}
+        <a {{ printf "href=%q" (printf "https://%s/@%s/%s" .Params.mastodon.hostname .Params.mastodon.username (string .Params.mastodon.id)) | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
+          Mastodon
+        </a>
+        {{ end }}
+        {{ if .Params.pixelfed }}
+        <a {{ printf "href=%q" (printf "https://%s/p/%s/%s" .Params.pixelfed.hostname .Params.pixelfed.username (string .Params.pixelfed.id)) | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
+          Pixelfed
+        </a>
+        {{ end }}
+        {{ if .Params.threads }}
+        <a {{ printf "href=%q" .Params.threads.url | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
+          Threads
+        </a>
+        {{ end }}
+        {{ if .Params.tumblr }}
+        <a {{ printf "href=%q" (printf "https://%s/%s" .Params.tumblr.hostname (string .Params.tumblr.id)) | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
+          Tumblr
+        </a>
+        {{ end }}
+      </p>
+      {{ end }}
+      {{ end }}
+    </div>
+    <div class="single-post-content" id="my-gallery">
+      {{ .Content }}
+    </div>
+    
+  </div>
+</div>
+
+<div class="microblog_conversation">	
+  <div class="microblog_post">		
+    <div class="microblog_user">			
+      <img class="microblog_avatar" src="https://avatars.micro.blog/avatars/2024/09/1318.jpg" width="20" height="20" style="max-width: 20px;">			
+      <span class="microblog_fullname">ian</span>		
+    </div>		
+    <div class="microblog_text">			
+      <p><a href="https://micro.blog/josh_____d">@josh<span>_</span><span>_</span><span>_</span><span>_</span><span>_</span>d</a> Excellent - will be trying it out tomorrow 🙏</p>		
+    </div>		
+    <div class="microblog_time">			
+      <a href="https://micro.blog/thedimpause/58200911">2025-02-22  5:25 pm</a>		
+    </div>	
+  </div>	
+  <div class="microblog_post">		
+    <div class="microblog_user">			
+      <img class="microblog_avatar" src="https://avatars.micro.blog/avatars/2024/09/1318.jpg" width="20" height="20" style="max-width: 20px;">			
+      <span class="microblog_fullname">ian</span>		
+    </div>		
+    <div class="microblog_text">			
+      <p><a href="https://micro.blog/josh_____d">@josh<span>_</span><span>_</span><span>_</span><span>_</span><span>_</span>d</a> … and working well on <a href="https://thedimpau.se/2025/02/23/my-top-weekly-artists-as.html">my blog</a>. Nice!</p>		
+    </div>		
+    <div class="microblog_time">			
+      <a href="https://micro.blog/thedimpause/58253734">2025-02-23 12:34 pm</a>		
+    </div>	
+  </div>
+  <form method="POST" class="microblog_reply_form" action="https://micro.blog/account/comments/58186970/post">
+    <p class="microblog_reply_signin">Sign in with <a href="https://micro.blog/account/comments/58186970/mb?url=https://joshda.wson.me/2025/02/22/120319.html">Micro.blog</a>, <a href="https://micro.blog/account/comments/58186970/mastodon?url=https://joshda.wson.me/2025/02/22/120319.html">Mastodon</a>, or <a href="https://micro.blog/account/comments/58186970/bluesky?url=https://joshda.wson.me/2025/02/22/120319.html">Bluesky</a> to reply:</p>
+    <input type="hidden" name="token" value="null">
+    <input type="hidden" name="username" value="null">
+    <input type="hidden" name="url" value="https://joshda.wson.me/2025/02/22/120319.html">
+    <p class="microblog_reply_textarea">
+      <textarea name="text" rows="4" cols="50" disabled=""></textarea>
+    </p>
+    <p class="microblog_reply_button">
+      <input type="submit" value="Post" disabled=""></p>
+    </form>
+  </div>
+
+  {{ if .Site.Params.include_conversation }}
+    <script type="text/javascript" src="https://micro.blog/conversation.js?url={{ .Permalink }}"></script>
+  {{ end }}
+  		
+{{ end }}

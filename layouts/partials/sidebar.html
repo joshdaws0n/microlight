@@ -1,0 +1,49 @@
+<div class="sticky-sidebar d-flex flex-column justify-content-between align-items-center">
+    <div class="d-flex flex-column align-items-center justify-content-end flex-grow-1 mb-3 w-100">
+      <hr class="border w-100 opacity-100"> 
+      <div class="btn-group dropdown rotated-dropdown">
+        <button type="button" class="btn no-show-border fw-bold" data-bs-toggle="dropdown" aria-expanded="false">
+          Links
+        </button>
+        <ul class="dropdown-menu reset-transform rounded-0">
+          <!-- Dropdown menu links -->
+          {{ $url := .RelPermalink }}
+          {{ range .Site.Menus.main }}
+            <li>
+                {{ if .Page.Params.redirect }}
+                <a class="dropdown-item {{ if eq .URL $url }}active{{ end }}" href="{{ .Page.Params.redirect }}">{{ .Name }}</a>
+                {{ else }}
+                <a class="dropdown-item {{ if eq .URL $url }}active{{ end }}" href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a>
+                {{ end }}
+            </li>
+          {{ end }}
+        </ul>
+      </div>
+      <hr class="border w-100 opacity-100"> 
+      <div class="blog-name">
+        <a class="no-under" href="/" style="font-weight: 700">
+          {{ .Site.Title }}
+        </a>
+      </div>
+    </div>
+  
+    <a class="" href="/">
+      <img src="{{ .Site.Author.avatar }}" alt="Profile Photo" class="img-fluid profile-photo" />
+    </a>
+  
+    {{ with .Site.Params.lastfmUsername }}
+      {{ if ne . "" }}
+      <a class="no-under" href="https://last.fm/user/{{ . }}" target="_blank">
+        <div class="album-wrapper position-relative">
+          <div class="spinner-overlay" id="spinner-overlay-side">
+            <div class="spinner"></div>
+          </div>
+          <div class="lastfm-overlay d-none" id="lastfm-overlay">
+            <i class="fab fa-lastfm fa-2x"></i>
+          </div>
+          <img src="{{ "img/note.png" | relURL }}" alt="Album Art" class="album-art img-fluid profile-photo" id="last-fm-art-side">
+        </div>
+      </a>
+      {{ end }}
+    {{ end }}
+  </div>
