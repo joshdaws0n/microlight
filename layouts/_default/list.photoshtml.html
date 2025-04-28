@@ -1,9 +1,12 @@
-{{ define "main" }} {{ $photoignore := .Site.Params.categoriesIgnorePhotosPage
-}}
+{{ define "main" }} 
+{{ $photoignore := .Site.Params.categoriesIgnorePhotosPage }}
 
 <div class="d-flex justify-content-center" id="photo-spinner">
   <div class="spinner-border text-secondary" role="status"></div>
 </div>
+
+{{- $pagesWithPhotos := where .Site.Pages "Params.photos" "!=" nil -}}
+{{- $filteredPages := slice -}}
 
 {{- range $page := $pagesWithPhotos -}}
   {{- $ignore := false -}}
