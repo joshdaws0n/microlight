@@ -20,8 +20,11 @@
   {{- end -}}
 {{- end -}}
 
+{{- $list := $filteredPages -}}
+
 <div class="grid" id="photo-grid" style="display: none">
-  {{- $len := (len $list) -}} {{ range $index, $value := $list }}
+  {{- $len := (len $list) -}}
+  {{ range $index, $value := $list }}
   <div class="grid-item">
     <a href="{{ .Permalink }}">
       {{ range first 1 .Params.photos }}
