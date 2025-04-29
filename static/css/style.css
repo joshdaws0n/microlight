@@ -162,7 +162,7 @@ body {
   padding: 0 !important;
 }
 
-#list_results p:not(:first-child):not(:last-child) {
+#list_results p:not(:first-child) {
   border-top: 2px var(--bs-border-style) var(--bs-border-color)!important;
   padding-top: 0.5rem !important;
 }
