@@ -51,9 +51,34 @@
         {{ end }}
     {{ end }}
     {{ end }}
-  <!-- <script src="{{ "js/search.js" | relURL }}"></script> -->
+  <script>
+    const toggle = document.getElementById('search-toggle');
+    const form = document.getElementById('search-form');
+    const input = document.getElementById('search-input');
+  
+    toggle.addEventListener('click', () => {
+      form.classList.toggle('expanded');
+      if (form.classList.contains('expanded')) {
+        input.focus();
+      }
+    });
+  
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const query = encodeURIComponent(input.value.trim());
+      if (query) {
+        window.location.href = `/search/?q=${query}`;
+      }
+    });
+  
+    // Optional: close search if clicked outside
+    document.addEventListener('click', (e) => {
+      if (!form.contains(e.target) && !toggle.contains(e.target)) {
+        form.classList.remove('expanded');
+      }
+    });
+  </script>
   <script src="{{ "js/archive.js" | relURL }}"></script>
-  <script src="{{ "js/hamburger.js" | relURL }}"></script>
   <script src="{{ "js/lightbox.js" | relURL }}"></script>
   <script src="{{ "js/masonry.js" | relURL }}"></script>
 </body>

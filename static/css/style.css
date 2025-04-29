@@ -21,8 +21,8 @@ body {
 /* dark mode */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bs-body-bg: rgb(35, 38, 48); /* Overrides the body background color */
-    --bs-body-color: #c7c7c7; /* Overrides the body text color */
+    --bs-body-bg: rgb(35, 38, 48); 
+    --bs-body-color: #c7c7c7; 
   }
   body {
     background-color: rgb(35, 38, 48);
@@ -64,9 +64,9 @@ body {
   transform: rotate(180deg);
   text-align: center;
   font-weight: bold;
-  white-space: nowrap;         /* Prevents line breaks */
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;     /* Optional: adds ... if cut off */
+  text-overflow: ellipsis; 
 }
 
 .blog-name a {
@@ -78,18 +78,18 @@ body {
 }
 
 .rotated-dropdown {
-  position: relative; /* Anchors the dropdown */
-  transform: rotate(180deg); /* Keeps button rotated */
+  position: relative; 
+  transform: rotate(180deg);
   writing-mode: vertical-rl;
 }
 
 .reset-transform {
-  transform: rotate(180deg); /* Cancels the parent rotation */
+  transform: rotate(180deg); 
   writing-mode: horizontal-tb !important;
   position: absolute !important;
-  top: 28% !important;  /* Adjust as needed */
-  left: -352% !important; /* Place it to the right of the rotated button */
-  transform: translateY(-50%) rotate(180deg) !important; /* Center vertically + cancel rotation */
+  top: 28% !important; 
+  left: -352% !important; 
+  transform: translateY(-50%) rotate(180deg) !important;
   z-index: 9999;
 }
 
@@ -152,11 +152,72 @@ body {
 }
 
 /* search */
+.field {
+  border-radius: 0rem !important
+}
+
+#list_results {
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+#list_results p:not(:first-child):not(:last-child) {
+  border-top: 2px var(--bs-border-style) var(--bs-border-color)!important;
+  padding-top: 0.5rem !important;
+}
+
 .search-result:hover {
   text-decoration-line: underline;
   text-decoration-style: wavy;
   text-underline-offset: 0.3rem;
 }
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-toggle {
+  color: var(--bs-body-color);
+  background: transparent;
+}
+
+.search-form {
+  position: fixed;
+  top: 0.5rem; /* adjust depending on where you want it */
+  left: 3.75rem; /* matches width of sidebar */
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+  z-index: 9999;
+  background: var(--bs-body-bg);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 0;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.search-form input {
+  border: none;
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+  background: transparent;
+  outline: none;
+  box-shadow: none !important;
+}
+
+.search-form.expanded {
+  width: 20rem;
+  opacity: 1;
+  padding: 0 0.75rem;
+}
+
 
 /* timeline */
 
@@ -380,7 +441,6 @@ blockquote p {
 .album-art {
   max-width: 100px;
   height: auto;
-  /* margin-right: 10px; */
 }
 
 .book-art {
@@ -500,12 +560,12 @@ blockquote p {
 }
 
 .icon-svg {
-  width: 1.35em; /* Matches fa-xl size */
+  width: 1.35em; 
   height: 1.35em;
-  fill: currentColor; /* Inherits text color */
-  vertical-align: middle; /* Aligns with text */
+  fill: currentColor; 
+  vertical-align: middle; 
   position: relative;
-  top: -0.1em; /* Adjust this value to fine-tune alignment */
+  top: -0.1em; 
 }
 
 .post-meta-container {
@@ -515,6 +575,5 @@ blockquote p {
 }
 
 .post-meta-container .u-url {
-  margin-right: auto; /* Pushes the first item to the left */
-}
+  margin-right: auto;
 
