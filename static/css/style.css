@@ -3,8 +3,12 @@ a {
   color: inherit;
 }
 
+:root {
+  --bs-body-bg: rgb(247, 247, 247); 
+}
+
 body {
-  font-family: var(--font-family-base)
+  font-family: var(--font-family-base);
 }
 .no-under {
   text-decoration: none;
