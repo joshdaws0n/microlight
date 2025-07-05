@@ -3,13 +3,9 @@
 {{ partial "head.html" . }}
 <body>
   <div class="container-fluid">
-    <div class="row">
-      <div class="sticky-sidebar px-0 pt-0" id="sidebar">
-        <div class="sticky-sidebar border-end">
-          {{ partial "sidebar.html" . }}
-        </div>
-      </div>
-      <div class="col col-md-8 col-lg-5 col-xl-4 pt-3" id="content">
+    <div class="row flex-nowrap">
+      {{ partial "sidebar.html" . }}
+      <div class="col col-md-8 col-lg-5 col-xl-4 pt-4 px-4" id="content">
         <!-- Lightbox container -->
         <div id="lightbox">
           <div id="lightbox-container" class="lightbox-container">
@@ -51,6 +47,15 @@
         {{ end }}
     {{ end }}
     {{ end }}
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const hamburgerBtn = sidebar.querySelector('.fa-bars').closest('button');
+
+    hamburgerBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      sidebar.classList.toggle('sidebar-expanded');
+    });
+  </script>
   <script>
     const toggle = document.getElementById('search-toggle');
     const form = document.getElementById('search-form');

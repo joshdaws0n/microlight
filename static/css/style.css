@@ -5,6 +5,8 @@ a {
 
 :root {
   --bs-body-bg: rgb(247, 247, 247); 
+  --bs-border-width: 2px;
+  --bs-border-color: rgb(200, 200, 200);
 }
 
 body {
@@ -27,6 +29,7 @@ body {
   :root {
     --bs-body-bg: rgb(35, 38, 48); 
     --bs-body-color: #c7c7c7; 
+    --bs-border-width: 2px;
   }
   body {
     background-color: rgb(35, 38, 48);
@@ -42,6 +45,18 @@ body {
   .border, .border-start, .border-top, .border-bottom, .border-end {
     border-color: rgb(75, 75, 75) !important;
   }
+  .sticky-sidebar {
+    background: #323542 !important;
+  }
+  .sidebar-main {
+    background: #323542 !important;
+  }
+  .sidebar-overlay-panel {
+    background: #323542 !important;
+  }
+  .sidebar-border {
+    border-color: rgb(75, 75, 75) !important
+  }
   
 }
 
@@ -56,11 +71,49 @@ body {
 
 .sticky-sidebar {
   position: sticky;
-  padding-bottom: env(safe-area-inset-bottom, 0);
   top: 0;
-  z-index: 1000;
-  height: 100dvh;
+  height: 100vh;
   width: 3.75rem;
+  z-index: 1000;
+  background: #e9e9e9;
+  overflow: visible;
+}
+
+.sidebar-main {
+  width: 3.75rem;
+  height: 100vh;
+  transition: transform 0.2s ;
+  position: relative;
+  z-index: 2;
+  background: #e9e9e9;
+}
+
+.sidebar-overlay-panel {
+  position: absolute;
+  top: 0;
+  left: -12.25rem; /* - (overlay width) */
+  width: 12.25rem;
+  height: 100vh;
+  background: #e9e9e9;
+  box-shadow: 2px 0 16px rgba(0,0,0,0.15);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.sticky-sidebar.sidebar-expanded .sidebar-main {
+  transform: translateX(12.25rem);
+}
+
+.sticky-sidebar.sidebar-expanded .sidebar-overlay-panel {
+  left: 0;
+  pointer-events: auto;
+  opacity: 1;
+  transition: left 0.1s ;
+}
+
+.sidebar-border {
+  border-color: var(--bs-border-color);
 }
 
 .blog-name {

@@ -1,58 +1,80 @@
-<div class="sticky-sidebar d-flex flex-column">
-  <div class="search-icon-wrapper d-flex flex-column justify-content-center">
-    <button id="search-toggle" class="btn mt-2 border-0" aria-label="Search">
-      <i class="fas fa-search fa-lg"></i>
-    </button>
-    <hr class="border w-100 opacity-100 mt-2"> 
-    <form id="search-form" class="search-form collapsed border border-2" role="search">
-      <input type="text" name="q" id="search-input" class="form-control" placeholder="Search...">
-    </form>
-  </div>
-  <div class="d-flex flex-column sidebar-content align-items-center justify-content-end flex-grow-1 mb-3 w-100">
-      <hr class="border w-100 opacity-100"> 
-      <div class="btn-group dropdown rotated-dropdown">
-        <button type="button" class="btn no-show-border fw-bold" data-bs-toggle="dropdown" aria-expanded="false">
-          Links
+<div class="sticky-sidebar px-0 pt-0" id="sidebar">
+  <div class="sidebar-main">
+    <div class="sticky-sidebar d-flex flex-column border-end">
+      <div class="search-icon-wrapper d-flex flex-column justify-content-center">
+        <button id="search-toggle" class="btn mt-2 border-0" aria-label="Search">
+          <i class="fas fa-search fa-lg"></i>
         </button>
-        <ul class="dropdown-menu reset-transform rounded-0">
-          <!-- Dropdown menu links -->
-          {{ $url := .RelPermalink }}
-          {{ range .Site.Menus.main }}
-            <li>
-                {{ if .Page.Params.redirect }}
-                <a class="dropdown-item {{ if eq .URL $url }}active{{ end }}" href="{{ .Page.Params.redirect }}">{{ .Name }}</a>
-                {{ else }}
-                <a class="dropdown-item {{ if eq .URL $url }}active{{ end }}" href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a>
-                {{ end }}
-            </li>
-          {{ end }}
-        </ul>
+        <hr class="sidebar-border w-100 opacity-100 mt-2"> 
+        <form id="search-form" class="search-form collapsed border border-2" role="search">
+          <input type="text" name="q" id="search-input" class="form-control" placeholder="Search...">
+        </form>
       </div>
-      <hr class="border w-100 opacity-100"> 
-      <div class="blog-name">
-        <a class="no-under" href="/" style="font-weight: 700">
-          {{ .Site.Title }}
-        </a>
-      </div>
-    </div>
-  
-    <a class="" href="/">
-      <img src="{{ .Site.Author.avatar }}" alt="Profile Photo" class="img-fluid profile-photo" />
-    </a>
-  
-    {{ with .Site.Params.lastfmUsername }}
-      {{ if ne . "" }}
-      <a class="no-under" href="https://last.fm/user/{{ . }}" target="_blank">
-        <div class="album-wrapper position-relative">
-          <div class="spinner-overlay" id="spinner-overlay-side">
-            <div class="spinner"></div>
-          </div>
-          <div class="lastfm-overlay d-none" id="lastfm-overlay">
-            <i class="fab fa-lastfm fa-2x"></i>
-          </div>
-          <img src="{{ "img/note.png" | relURL }}" alt="Album Art" class="album-art img-fluid profile-photo" id="last-fm-art-side">
+      <div class="d-flex flex-column sidebar-content align-items-center justify-content-end flex-grow-1 w-100">
+        <hr class="sidebar-border w-100 opacity-100"> 
+        <div class="btn-group dropdown rotated-dropdown">
+          <button type="button" class="btn no-show-border" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          
         </div>
+        <hr class="sidebar-border w-100 opacity-100 mb-0"> 
+        <div class="d-flex align-items-center w-100">
+          <div class="blog-name flex-grow-1 d-flex align-items-center justify-content-center w-100 py-3">
+            <a class="no-under" href="/">
+              {{ .Site.Title }}
+            </a>
+          </div>
+        </div>
+      </div>
+      <hr class="sidebar-border w-100 opacity-100 m-0">
+      <a class="" href="/">
+        <img src="{{ .Site.Author.avatar }}" alt="Profile Photo" class="img-fluid profile-photo" />
       </a>
+    
+      {{ with .Site.Params.lastfmUsername }}
+        {{ if ne . "" }}
+        <a class="no-under" href="https://last.fm/user/{{ . }}" target="_blank">
+          <div class="album-wrapper position-relative">
+            <div class="spinner-overlay" id="spinner-overlay-side">
+              <div class="spinner"></div>
+            </div>
+            <div class="lastfm-overlay d-none" id="lastfm-overlay">
+              <i class="fab fa-lastfm fa-2x"></i>
+            </div>
+            <img src="{{ "img/note.png" | relURL }}" alt="Album Art" class="album-art img-fluid profile-photo" id="last-fm-art-side">
+          </div>
+        </a>
+        {{ end }}
       {{ end }}
-    {{ end }}
+    </div>
   </div>
+  <div class="sidebar-overlay-panel border-end" id="sidebar-overlay-panel">
+  <!-- Overlay content goes here -->
+    <div class="p-4">
+      <!-- Dropdown menu links -->
+      <div class="d-grid gap-2">
+        {{ $url := .RelPermalink }}
+        {{ range .Site.Menus.main }}
+          {{ if .Page.Params.redirect }}
+          <a class="btn btn-secondary rounded-0  btn-sm {{ if eq .URL $url }}active{{ end }}" href="{{ .Page.Params.redirect }}">{{ .Name }}</a>
+          {{ else }}
+          <a class="btn btn-secondary rounded-0  btn-sm {{ if eq .URL $url }}active{{ end }}" href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a>
+          {{ end }}
+        {{ end }}
+        <p class="text-center mb-0">Categories</p>
+        {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
+          <a class="btn btn-secondary rounded-0 btn-sm category-btn" href="{{ "/categories/" | relURL }}{{ $name | urlize }}">
+            {{ $name | title }}
+            <span class="badge text-bg-light ms-1">
+              {{ len $taxonomy }}
+            </span>
+          </a>
+        {{ end }}
+      </div>
+      
+    </div>
+    <hr class="sidebar-border w-100 opacity-100 mt-0"> 
+  </div>
+</div>
+
