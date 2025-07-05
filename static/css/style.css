@@ -72,21 +72,21 @@ body {
 .sticky-sidebar {
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 100dvh;
   width: 3.75rem;
   z-index: 1000;
   background: #e9e9e9;
-  overflow: visible;
   padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
 .sidebar-main {
   width: 3.75rem;
-  height: 100vh;
+  height: 100dvh;
   transition: transform 0.2s ;
   position: relative;
   z-index: 2;
   background: #e9e9e9;
+  padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
 .sidebar-overlay-panel {
@@ -94,7 +94,7 @@ body {
   top: 0;
   left: -12.25rem; /* - (overlay width) */
   width: 12.25rem;
-  height: 100vh;
+  height: 100dvh;
   background: #e9e9e9;
   box-shadow: 2px 0 16px rgba(0,0,0,0.15);
   z-index: 1;
