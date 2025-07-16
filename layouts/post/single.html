@@ -5,13 +5,13 @@
     <h5 class="card-title">{{ .Title }}</h5>
     {{ end }}
     <div class="mb-3">
-      <p class="post-meta mb-1">
-        <i class="fa-regular fa-calendar"></i>
+      <p class="post-meta mb-2">
+        <i class="fa-regular fa-calendar fa-lg fa-fw"></i>
         <time class="dt-published ms-1" datetime="{{ .Date.Format " 2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
       </p>
       {{ if .Site.Params.showReadingTime }}
       <p class="reading-time mb-2">
-        <i class="fa-solid fa-stopwatch"></i>
+        <i class="fa-solid fa-stopwatch fa-lg fa-fw"></i>
         {{ $readingTime := .ReadingTime }}
 
         {{ if eq $readingTime 1 }}
@@ -21,43 +21,51 @@
         {{ end }}
       </p>
       {{ end }}
-      <p class="post-tags mb-1">
-        <i class="fa-solid fa-tag me-1"></i>
+      <div class="d-flex align-items-center single-categories mb-2">
+        <div class="me-2">
+          <i class="fa fa-tags fa-lg fa-fw"></i>
+        </div>
         {{ $baseURL := .Site.BaseURL }}
-        {{ range .Params.Categories }}
-        <a href="{{ $baseURL }}/categories/{{ . | urlize }}" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">{{ . }}</a>
-        {{ end }}
-      </p>
+        <div class="d-flex flex-wrap">
+          {{ range .Params.Categories }}
+            <a class="btn btn-secondary btn-sm btn-xs no-under rounded-0" href="{{ $baseURL }}/categories/{{ . | urlize }}" role="button">{{ . }}</a>
+          {{ end }}
+        </div>
+      </div>
       {{ if .Site.Params.showCrossPostsPermalink }}
       {{ if or .Params.bluesky .Params.mastodon .Params.pixelfed .Params.threads .Params.tumblr }}
-      <p class="crosspost-locations mb-1">
-        <i class="fa-solid fa-share-nodes me-1"></i>
-        {{ if .Params.bluesky }}
-        <a {{ printf "href=%q" .Params.bluesky.link | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
-          Bluesky
-        </a>
-        {{ end }}
-        {{ if .Params.mastodon }}
-        <a {{ printf "href=%q" (printf "https://%s/@%s/%s" .Params.mastodon.hostname .Params.mastodon.username (string .Params.mastodon.id)) | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
-          Mastodon
-        </a>
-        {{ end }}
-        {{ if .Params.pixelfed }}
-        <a {{ printf "href=%q" (printf "https://%s/p/%s/%s" .Params.pixelfed.hostname .Params.pixelfed.username (string .Params.pixelfed.id)) | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
-          Pixelfed
-        </a>
-        {{ end }}
-        {{ if .Params.threads }}
-        <a {{ printf "href=%q" .Params.threads.url | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
-          Threads
-        </a>
-        {{ end }}
-        {{ if .Params.tumblr }}
-        <a {{ printf "href=%q" (printf "https://%s/%s" .Params.tumblr.hostname (string .Params.tumblr.id)) | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
-          Tumblr
-        </a>
-        {{ end }}
-      </p>
+      <div class="d-flex align-items-center single-categories mb-2">
+        <div class="me-2">
+          <i class="fa-solid fa-share-nodes fa-lg fa-fw"></i>
+        </div>
+        <div class="d-flex flex-wrap">
+          {{ if .Params.bluesky }}
+          <a {{ printf "href=%q" .Params.bluesky.link | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
+            Bluesky
+          </a>
+          {{ end }}
+          {{ if .Params.mastodon }}
+          <a {{ printf "href=%q" (printf "https://%s/@%s/%s" .Params.mastodon.hostname .Params.mastodon.username (string .Params.mastodon.id)) | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
+            Mastodon
+          </a>
+          {{ end }}
+          {{ if .Params.pixelfed }}
+          <a {{ printf "href=%q" (printf "https://%s/p/%s/%s" .Params.pixelfed.hostname .Params.pixelfed.username (string .Params.pixelfed.id)) | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
+            Pixelfed
+          </a>
+          {{ end }}
+          {{ if .Params.threads }}
+          <a {{ printf "href=%q" .Params.threads.url | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
+            Threads
+          </a>
+          {{ end }}
+          {{ if .Params.tumblr }}
+          <a {{ printf "href=%q" (printf "https://%s/%s" .Params.tumblr.hostname (string .Params.tumblr.id)) | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
+            Tumblr
+          </a>
+          {{ end }}
+        </div>
+      </div>
       {{ end }}
       {{ end }}
     </div>
