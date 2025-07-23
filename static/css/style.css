@@ -178,6 +178,11 @@ body {
   display: none !important;
 }
 
+video {
+  max-width: 100%;
+  height: auto;
+}
+
 .single-post-content img {
   width: 100% !important;
   height: 100% !important;
