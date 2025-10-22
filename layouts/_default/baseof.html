@@ -2,10 +2,13 @@
 <html lang="en">
 {{ partial "head.html" . }}
 <body>
+  <!-- Top navigation bar -->
+  {{ partial "sidebar.html" . }}
+  
+  <!-- Main content -->
   <div class="container-fluid">
-    <div class="row flex-nowrap">
-      {{ partial "sidebar.html" . }}
-      <div class="col col-md-8 col-lg-5 col-xl-4 pt-4 px-4" id="content">
+    <div class="row justify-content-center">
+      <div class="col-12 pt-4" id="content">
         <!-- Lightbox container -->
         <div id="lightbox">
           <div id="lightbox-container" class="lightbox-container">

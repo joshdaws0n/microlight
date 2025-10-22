@@ -1,78 +1,74 @@
 {{ define "main" }}
-<div class="card mb-3 perma rounded-0 ms-0">
-  <div class="card-body">
-    {{ if .Title }}
-    <h5 class="card-title">{{ .Title }}</h5>
-    {{ end }}
-    <div class="mb-3">
-      <p class="post-meta mb-2">
-        <i class="fa-regular fa-calendar fa-lg fa-fw"></i>
-        <time class="dt-published ms-1" datetime="{{ .Date.Format " 2006-01-02 15:04:05 -0700" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
-      </p>
+<div class="mb-3">
+  <div class="post-metadata pb-4 border-bottom mb-xl">
+    <div class="d-flex flex-wrap align-items-center mb-3">
+      <time class="dt-published" datetime="{{ .Date.Format " 2006-01-02 15:04:05 -0700" }}">
+        {{ .Date.Format "January 2, 2006" }}
+      </time>
       {{ if .Site.Params.showReadingTime }}
-      <p class="reading-time mb-2">
-        <i class="fa-solid fa-stopwatch fa-lg fa-fw"></i>
-        {{ $readingTime := .ReadingTime }}
-
+      {{ $readingTime := .ReadingTime }}
+      <span class="">
         {{ if eq $readingTime 1 }}
-            {{ $readingTime }} minute to read
+          {{ $readingTime }} min read
         {{ else }}
-            {{ $readingTime }} minutes to read
+          {{ $readingTime }} min read
         {{ end }}
-      </p>
+      </span>
       {{ end }}
-      <div class="d-flex align-items-center single-categories mb-2">
-        <div class="me-2">
-          <i class="fa fa-tags fa-lg fa-fw"></i>
-        </div>
-        {{ $baseURL := .Site.BaseURL }}
-        <div class="d-flex flex-wrap">
-          {{ range .Params.Categories }}
-            <a class="btn btn-secondary btn-sm btn-xs no-under rounded-0" href="{{ $baseURL }}/categories/{{ . | urlize }}" role="button">{{ . }}</a>
-          {{ end }}
-        </div>
-      </div>
-      {{ if .Site.Params.showCrossPostsPermalink }}
-      {{ if or .Params.bluesky .Params.mastodon .Params.pixelfed .Params.threads .Params.tumblr }}
-      <div class="d-flex align-items-center single-categories mb-2">
-        <div class="me-2">
-          <i class="fa-solid fa-share-nodes fa-lg fa-fw"></i>
-        </div>
-        <div class="d-flex flex-wrap">
-          {{ if .Params.bluesky }}
-          <a {{ printf "href=%q" .Params.bluesky.link | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
-            Bluesky
-          </a>
-          {{ end }}
-          {{ if .Params.mastodon }}
-          <a {{ printf "href=%q" (printf "https://%s/@%s/%s" .Params.mastodon.hostname .Params.mastodon.username (string .Params.mastodon.id)) | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
-            Mastodon
-          </a>
-          {{ end }}
-          {{ if .Params.pixelfed }}
-          <a {{ printf "href=%q" (printf "https://%s/p/%s/%s" .Params.pixelfed.hostname .Params.pixelfed.username (string .Params.pixelfed.id)) | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
-            Pixelfed
-          </a>
-          {{ end }}
-          {{ if .Params.threads }}
-          <a {{ printf "href=%q" .Params.threads.url | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
-            Threads
-          </a>
-          {{ end }}
-          {{ if .Params.tumblr }}
-          <a {{ printf "href=%q" (printf "https://%s/%s" .Params.tumblr.hostname (string .Params.tumblr.id)) | safeHTMLAttr }} target="_blank" class="btn btn-secondary btn-sm btn-xs no-under rounded-0">
-            Tumblr
-          </a>
-          {{ end }}
-        </div>
-      </div>
-      {{ end }}
-      {{ end }}
-    </div>
-    <div class="single-post-content" id="my-gallery">
-      {{ .Content }}
     </div>
     
+    {{ if .Params.Categories }}
+    <div class="mb-3">
+      <span class="small text-uppercase fw-medium mb-2 d-block">Categories</span>
+      {{ $baseURL := .Site.BaseURL }}
+      <div class="d-flex flex-wrap gap-2">
+        {{ range .Params.Categories }}
+          <a class="badge bg-secondary text-white text-decoration-none px-3 py-2" href="{{ $baseURL }}/categories/{{ . | urlize }}">{{ . }}</a>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+    
+    {{ if .Site.Params.showCrossPostsPermalink }}
+    {{ if or .Params.bluesky .Params.mastodon .Params.pixelfed .Params.threads .Params.tumblr }}
+    <div class="mb-0">
+      <span class=" small text-uppercase fw-medium mb-2 d-block">Also posted on</span>
+      <div class="d-flex flex-wrap gap-2">
+        {{ if .Params.bluesky }}
+        <a {{ printf "href=%q" .Params.bluesky.link | safeHTMLAttr }} target="_blank" class="badge bg-secondary text-white text-decoration-none px-3 py-2">
+          Bluesky
+        </a>
+        {{ end }}
+        {{ if .Params.mastodon }}
+        <a {{ printf "href=%q" (printf "https://%s/@%s/%s" .Params.mastodon.hostname .Params.mastodon.username (string .Params.mastodon.id)) | safeHTMLAttr }} target="_blank" class="badge bg-secondary text-white text-decoration-none px-3 py-2">
+          Mastodon
+        </a>
+        {{ end }}
+        {{ if .Params.pixelfed }}
+        <a {{ printf "href=%q" (printf "https://%s/p/%s/%s" .Params.pixelfed.hostname .Params.pixelfed.username (string .Params.pixelfed.id)) | safeHTMLAttr }} target="_blank" class="badge bg-secondary text-white text-decoration-none px-3 py-2">
+          Pixelfed
+        </a>
+        {{ end }}
+        {{ if .Params.threads }}
+        <a {{ printf "href=%q" .Params.threads.url | safeHTMLAttr }} target="_blank" class="badge bg-secondary text-white text-decoration-none px-3 py-2">
+          Threads
+        </a>
+        {{ end }}
+        {{ if .Params.tumblr }}
+        <a {{ printf "href=%q" (printf "https://%s/%s" .Params.tumblr.hostname (string .Params.tumblr.id)) | safeHTMLAttr }} target="_blank" class="badge bg-secondary text-white text-decoration-none px-3 py-2">
+          Tumblr
+        </a>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+    {{ end }}
+  </div>
+  <div class="single-post-content pt-4" id="my-gallery">
+    {{ if .Title }}
+    <h2 class="mb-3">{{ .Title }}</h2>
+    {{ end }}
+    {{ .Content }}
   </div>
 </div>
 
