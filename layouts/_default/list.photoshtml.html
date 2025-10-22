@@ -26,10 +26,16 @@
   {{- $len := (len $list) -}}
   {{ range $index, $value := $list }}
   <div class="grid-item">
-    <a href="{{ .Permalink }}">
+    <a href="{{ .Permalink }}" class="photo-item">
       {{ range first 1 .Params.photos }}
       <img src="{{ . }}" alt="" class="photos-grid-item w-100" loading="lazy" />
       {{ end }}
+      <div class="photo-overlay">
+        <div class="photo-overlay-content">
+          <div class="photo-date">{{ .Date.Format "Jan 2, 2006" }}</div>
+          <div class="photo-text">{{ delimit (.PlainWords | first 20) " " }}</div>
+        </div>
+      </div>
     </a>
   </div>
   {{ end }}

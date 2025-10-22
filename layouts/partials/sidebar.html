@@ -1,70 +1,99 @@
 <div class="sticky-sidebar px-0 pt-0" id="sidebar">
-  <div class="sidebar-main">
-    <div class="sticky-sidebar d-flex flex-column border-end">
-      <div class="search-icon-wrapper d-flex flex-column justify-content-center">
-        <button id="search-toggle" class="btn mt-2 border-0" aria-label="Search">
-          <i class="fas fa-search fa-lg"></i>
+  <div class="sidebar-main d-flex align-items-center justify-content-between px-3">
+    <!-- Left side: Blog name -->
+    <div class="blog-name">
+      <a class="no-under" href="/">
+        <!-- Profile photo -->
+        <a class="d-flex align-items-center" href="/">
+          <img src="{{ .Site.Author.avatar }}" alt="Profile Photo" class="rounded me-2" style="width: 32px; height: 32px; object-fit: cover;" />
+        </a>
+        {{ .Site.Title }}
+      </a>
+    </div>
+
+    <!-- Right side: Search, Profile, LastFM, Menu -->
+    <div class="d-flex align-items-center gap-2">
+      <!-- Search container -->
+      <div class="position-relative">
+        <!-- Search button -->
+        <button id="search-toggle" class="btn border-0 p-2" aria-label="Search">
+          <i class="fas fa-search"></i>
         </button>
-        <hr class="sidebar-border w-100 opacity-100 mt-2"> 
+        
+        <!-- Search form (positioned relative to button) -->
         <form id="search-form" class="search-form collapsed border border-2" role="search">
           <input type="text" name="q" id="search-input" class="form-control" placeholder="Search...">
         </form>
       </div>
-      <div class="d-flex flex-column sidebar-content align-items-center justify-content-end flex-grow-1 w-100">
-        <hr class="sidebar-border w-100 opacity-100"> 
-        <div class="btn-group dropdown rotated-dropdown">
-          <button type="button" class="btn no-show-border" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-bars"></i>
-          </button>
-          
-        </div>
-        <hr class="sidebar-border w-100 opacity-100 mb-0"> 
-        <div class="d-flex align-items-center w-100">
-          <div class="blog-name flex-grow-1 d-flex align-items-center justify-content-center w-100 py-3">
-            <a class="no-under" href="/">
-              {{ .Site.Title }}
-            </a>
-          </div>
-        </div>
-      </div>
-      <hr class="sidebar-border w-100 opacity-100 m-0">
-      <a class="" href="/">
-        <img src="{{ .Site.Author.avatar }}" alt="Profile Photo" class="img-fluid profile-photo" />
-      </a>
     
+      <!-- Last.fm -->
       {{ with .Site.Params.lastfmUsername }}
         {{ if ne . "" }}
-        <a class="no-under" href="https://last.fm/user/{{ . }}" target="_blank">
+        <a class="no-under d-flex align-items-center" href="https://last.fm/user/{{ . }}" target="_blank">
           <div class="album-wrapper position-relative">
             <div class="spinner-overlay" id="spinner-overlay-side">
               <div class="spinner"></div>
             </div>
-            <div class="lastfm-overlay d-none" id="lastfm-overlay">
-              <i class="fab fa-lastfm fa-2x"></i>
+            <div class="lastfm-overlay d-none rounded" id="lastfm-overlay">
+              <i class="fab fa-lastfm"></i>
             </div>
-            <img src="{{ "img/note.png" | relURL }}" alt="Album Art" class="album-art img-fluid profile-photo" id="last-fm-art-side">
+            <img src="{{ "img/note.png" | relURL }}" alt="Album Art" class="rounded" style="width: 32px; height: 32px; object-fit: cover;" id="last-fm-art-side">
           </div>
         </a>
         {{ end }}
       {{ end }}
+
+      <!-- Menu dropdown -->
+      <div class="btn-group dropdown position-relative">
+        <button type="button" class="btn border-0 p-2" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        
+        <!-- Desktop dropdown panel -->
+        <div class="sidebar-overlay-panel border-end d-none d-md-block" id="sidebar-overlay-panel-desktop">
+          <div class="p-4">
+            <!-- Dropdown menu links -->
+            <div class="d-grid gap-2">
+              {{ $url := .RelPermalink }}
+              {{ range .Site.Menus.main }}
+                {{ if .Page.Params.redirect }}
+                <a class="btn btn-secondary rounded  btn-sm {{ if eq .URL $url }}active{{ end }}" href="{{ .Page.Params.redirect }}">{{ .Name }}</a>
+                {{ else }}
+                <a class="btn btn-secondary rounded  btn-sm {{ if eq .URL $url }}active{{ end }}" href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a>
+                {{ end }}
+              {{ end }}
+              <p class="text-center mb-0">Categories</p>
+              {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
+                <a class="btn btn-secondary rounded btn-sm category-btn" href="{{ "/categories/" | relURL }}{{ $name | urlize }}">
+                  {{ $name | title }}
+                  <span class="badge text-bg-light ms-1">
+                    {{ len $taxonomy }}
+                  </span>
+                </a>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="sidebar-overlay-panel border-end" id="sidebar-overlay-panel">
-  <!-- Overlay content goes here -->
+  
+  <!-- Mobile slide-in panel -->
+  <div class="sidebar-overlay-panel border-end d-md-none" id="sidebar-overlay-panel-mobile">
     <div class="p-4">
       <!-- Dropdown menu links -->
       <div class="d-grid gap-2">
         {{ $url := .RelPermalink }}
         {{ range .Site.Menus.main }}
           {{ if .Page.Params.redirect }}
-          <a class="btn btn-secondary rounded-0  btn-sm {{ if eq .URL $url }}active{{ end }}" href="{{ .Page.Params.redirect }}">{{ .Name }}</a>
+          <a class="btn btn-secondary rounded  btn-sm {{ if eq .URL $url }}active{{ end }}" href="{{ .Page.Params.redirect }}">{{ .Name }}</a>
           {{ else }}
-          <a class="btn btn-secondary rounded-0  btn-sm {{ if eq .URL $url }}active{{ end }}" href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a>
+          <a class="btn btn-secondary rounded  btn-sm {{ if eq .URL $url }}active{{ end }}" href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a>
           {{ end }}
         {{ end }}
         <p class="text-center mb-0">Categories</p>
         {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
-          <a class="btn btn-secondary rounded-0 btn-sm category-btn" href="{{ "/categories/" | relURL }}{{ $name | urlize }}">
+          <a class="btn btn-secondary rounded btn-sm category-btn" href="{{ "/categories/" | relURL }}{{ $name | urlize }}">
             {{ $name | title }}
             <span class="badge text-bg-light ms-1">
               {{ len $taxonomy }}
@@ -72,9 +101,7 @@
           </a>
         {{ end }}
       </div>
-      
     </div>
-    <hr class="sidebar-border w-100 opacity-100 mt-0"> 
   </div>
 </div>
 
