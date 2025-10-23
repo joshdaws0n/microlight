@@ -213,6 +213,7 @@ a:hover {
 
 /* ===== TOP NAVIGATION ===== */
 .sticky-sidebar {
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     width: 100%;
@@ -222,6 +223,29 @@ a:hover {
     overflow: visible;
     padding-top: env(safe-area-inset-top, 0);
     border-bottom: var(--bs-border-width) solid var(--color-border);
+    /* iOS Safari viewport fix */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+    .sticky-sidebar {
+        position: fixed;
+        top: env(safe-area-inset-top, 0);
+        left: 0;
+        right: 0;
+    }
+    
+    /* Add top padding to body to compensate for fixed navbar on iOS */
+    body {
+        padding-top: calc(var(--header-height) + env(safe-area-inset-top, 0));
+    }
+    
+    /* Adjust main content positioning */
+    #content {
+        padding-top: var(--spacing-sm); /* Reduce top padding since body now has padding */
+    }
 }
 
 .sidebar-main {
