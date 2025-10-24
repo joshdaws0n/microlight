@@ -12,7 +12,7 @@
   {{ end }}
   <div class="card {{ range .Params.categories }}{{ . }}{{ end }} mb-6 rounded-0 border-0 post-card">
     {{ if .Params.images }}
-    <div class="post-image border-bottom" {{ if not $fullimg }} style="max-height: 250px; overflow: hidden;" {{ end }}>
+    <div class="post-image" {{ if not $fullimg }} style="max-height: 250px; overflow: hidden;" {{ end }}>
       <img src="{{ index .Params.images 0 }}" class="card-img-top w-100 rounded-0" alt="...">
     </div>
     {{ end }}
