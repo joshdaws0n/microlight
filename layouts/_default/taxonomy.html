@@ -1,17 +1,19 @@
 {{ define "main" }}
 <section class="taxonomy-category">
   <!-- Category header -->
-  <div class="card mb-6 perma border-0 ms-0 post-card">
-    <div class="card-body px-0">
-      {{ if .Title }}
-      <h5 class="card-title" style="font-weight: 700">Posts in: {{ .Title }}</h5>
-      {{ end }}
-      <div class="post-content">
-        <p>Total: {{ len .Pages }} post{{ if ne (len .Pages) 1 }}s{{ end }}</p>
-      </div>
-    </div>
-  </div>  
-  
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    {{ with .Content }}
+    <p class="text-center">{{ . }}</p>
+    {{ end }}
+    <button
+      class="header-rss-btn"
+      data-rss-path="/categories/{{ .Title | urlize }}/feed.xml"
+      aria-label="Copy RSS feed URL for {{ .Title }}"
+    >
+      <i class="fas fa-rss"></i>
+      <span>RSS for {{ .Title }}</span>
+    </button>
+  </div>
   <!-- Reuse the post list partial -->
   {{ partial "post-list.html" (dict "Pages" .Pages "Site" .Site) }}
 </section>

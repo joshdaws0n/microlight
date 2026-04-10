@@ -56,7 +56,7 @@
           {{ if .Params.pixelfed }}
           <a class="icon-link no-under" {{ printf "href=%q" (printf "https://%s/p/%s/%s" .Params.pixelfed.hostname .Params.pixelfed.username (string .Params.pixelfed.id)) | safeHTMLAttr }}>
               <i class="fa-brands">
-                <svg style="vertical-align: -.27em;" xmlns="http://www.w3.org/2000/svg" width="17" height="18" aria-label="Pixelfed" viewBox="0 0 17 18">
+                <svg style="vertical-align: -.2em;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" aria-label="Pixelfed" viewBox="0 0 17 18">
                   <defs>
                     <mask id="cutout-mask">
                       <!-- White = visible, Black = transparent -->

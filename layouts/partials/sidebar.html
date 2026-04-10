@@ -1,107 +1,69 @@
-<div class="sticky-sidebar px-0 pt-0" id="sidebar">
-  <div class="sidebar-main d-flex align-items-center justify-content-between px-3">
-    <!-- Left side: Blog name -->
-    <div class="blog-name">
-      <a class="no-under" href="/">
-        <!-- Profile photo -->
-        <a class="d-flex align-items-center" href="/">
-          <img src="{{ .Site.Author.avatar }}" alt="Profile Photo" class="rounded me-2" style="width: 32px; height: 32px; object-fit: cover;" />
-        </a>
-        {{ .Site.Title }}
-      </a>
-    </div>
+<header class="site-header" id="sidebar">
+  <div class="site-header-inner">
 
-    <!-- Right side: Search, Profile, LastFM, Menu -->
-    <div class="d-flex align-items-center gap-2">
-      <!-- Search container -->
-      <div class="position-relative">
-        <!-- Search button -->
-        <button id="search-toggle" class="btn border-0 p-2" aria-label="Search">
-          <i class="fas fa-search"></i>
-        </button>
-        
-        <!-- Search form (positioned relative to button) -->
-        <form id="search-form" class="search-form collapsed border border-2" role="search">
-          <input type="text" name="q" id="search-input" class="form-control" placeholder="Search...">
-        </form>
-      </div>
-    
-      <!-- Last.fm -->
-      {{ with .Site.Params.lastfmUsername }}
-        {{ if ne . "" }}
-        <a class="no-under d-flex align-items-center" href="https://last.fm/user/{{ . }}" target="_blank">
-          <div class="album-wrapper position-relative">
-            <div class="spinner-overlay" id="spinner-overlay-side">
-              <div class="spinner"></div>
-            </div>
-            <div class="lastfm-overlay d-none rounded" id="lastfm-overlay">
-              <i class="fab fa-lastfm"></i>
-            </div>
-            <img src="{{ "img/note.png" | relURL }}" alt="Album Art" class="rounded" style="width: 32px; height: 32px; object-fit: cover;" id="last-fm-art-side">
-          </div>
+    <!-- Identity: centered avatar with lastfm badge, title + tagline below -->
+    <div class="header-identity">
+      <!-- Avatar + last.fm badge -->
+      <div class="header-avatar-wrap">
+        <a href="/" class="header-avatar-link no-under">
+          <img src="{{ .Site.Author.avatar }}" alt="{{ .Site.Author.name }}" class="header-avatar" />
         </a>
+        {{ with .Site.Params.lastfmUsername }}
+          {{ if ne . "" }}
+          <a class="header-lastfm-badge no-under" href="https://last.fm/user/{{ . }}" target="_blank" aria-label="Now playing on Last.fm">
+            <div class="spinner-overlay header-lastfm-spinner" id="spinner-overlay-side"><div class="spinner"></div></div>
+            <div class="lastfm-overlay d-none" id="lastfm-overlay"><i class="fab fa-lastfm"></i></div>
+            <img src="{{ "img/note.png" | relURL }}" alt="Album Art" class="header-lastfm-art" id="last-fm-art-side">
+          </a>
+          {{ end }}
         {{ end }}
-      {{ end }}
-
-      <!-- Menu dropdown -->
-      <div class="btn-group dropdown position-relative">
-        <button type="button" class="btn border-0 p-2" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-        
-        <!-- Desktop dropdown panel -->
-        <div class="sidebar-overlay-panel border-end d-none d-md-block" id="sidebar-overlay-panel-desktop">
-          <div class="p-4">
-            <!-- Dropdown menu links -->
-            <div class="d-grid gap-2">
-              {{ $url := .RelPermalink }}
-              {{ range .Site.Menus.main }}
-                {{ if .Page.Params.redirect }}
-                <a class="btn btn-secondary rounded  btn-sm {{ if eq .URL $url }}active{{ end }}" href="{{ .Page.Params.redirect }}">{{ .Name }}</a>
-                {{ else }}
-                <a class="btn btn-secondary rounded  btn-sm {{ if eq .URL $url }}active{{ end }}" href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a>
-                {{ end }}
-              {{ end }}
-              <p class="text-center mb-0">Categories</p>
-              {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
-                <a class="btn btn-secondary rounded btn-sm category-btn" href="{{ "/categories/" | relURL }}{{ $name | urlize }}">
-                  {{ $name | title }}
-                  <span class="badge text-bg-light ms-1">
-                    {{ len $taxonomy }}
-                  </span>
-                </a>
-              {{ end }}
-            </div>
-          </div>
+      </div>
+      <!-- Title + tagline -->
+      <div class="header-meta">
+        <a href="/" class="header-title no-under">{{ .Site.Title }}</a>
+        {{ with .Site.Params.tagline }}
+        <p class="header-tagline">{{ . }}</p>
+        {{ end }}
+      </div>
+      <!-- Search -->
+      <div class="header-search-wrap">
+        <div class="position-relative">
+          <button id="search-toggle" class="header-util-btn" aria-label="Search">
+            <i class="fas fa-search"></i>
+          </button>
+          <form id="search-form" class="search-form collapsed border border-2" role="search">
+            <input type="text" name="q" id="search-input" class="form-control" placeholder="Search...">
+          </form>
         </div>
       </div>
     </div>
-  </div>
-  
-  <!-- Mobile slide-in panel -->
-  <div class="sidebar-overlay-panel border-end d-md-none" id="sidebar-overlay-panel-mobile">
-    <div class="p-4">
-      <!-- Dropdown menu links -->
-      <div class="d-grid gap-2">
+
+    <!-- Nav + categories + RSS -->
+    <nav class="header-bottom" aria-label="Site navigation">
+      <div class="header-nav-links">
         {{ $url := .RelPermalink }}
         {{ range .Site.Menus.main }}
           {{ if .Page.Params.redirect }}
-          <a class="btn btn-secondary rounded  btn-sm {{ if eq .URL $url }}active{{ end }}" href="{{ .Page.Params.redirect }}">{{ .Name }}</a>
+          <a class="header-nav-link{{ if eq .URL $url }} active{{ end }}" href="{{ .Page.Params.redirect }}">{{ .Name }}</a>
           {{ else }}
-          <a class="btn btn-secondary rounded  btn-sm {{ if eq .URL $url }}active{{ end }}" href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a>
+          <a class="header-nav-link{{ if eq .URL $url }} active{{ end }}" href="{{ .URL | relLangURL | safeURL }}">{{ .Name }}</a>
           {{ end }}
         {{ end }}
-        <p class="text-center mb-0">Categories</p>
+      </div>
+      <div class="header-categories">
+        {{ $currentURL := .Page.RelPermalink }}
         {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
-          <a class="btn btn-secondary rounded btn-sm category-btn" href="{{ "/categories/" | relURL }}{{ $name | urlize }}">
-            {{ $name | title }}
-            <span class="badge text-bg-light ms-1">
-              {{ len $taxonomy }}
-            </span>
+          <a class="header-category-pill{{ if eq $currentURL (printf "/categories/%s/" ($name | urlize)) }} active{{ end }}" href="{{ "/categories/" | relURL }}{{ $name | urlize }}">
+            {{ $name | title }}<span class="header-category-count">{{ len $taxonomy }}</span>
           </a>
         {{ end }}
+        <button class="header-rss-btn" id="rss-copy-btn" aria-label="Copy RSS feed URL" title="Copy RSS feed link">
+          <i class="fas fa-rss"></i>
+          <span>RSS</span>
+        </button>
       </div>
-    </div>
-  </div>
-</div>
+    </nav>
 
+  </div>
+</header>
+<div id="rss-toast" class="rss-toast" role="status" aria-live="polite">RSS link copied</div>

@@ -8,14 +8,14 @@
   <!-- Main content -->
   <div class="container-fluid">
     <div class="row justify-content-center">
-      <div class="col-12 pt-4" id="content">
+      <div class="col-12 pt-3" id="content">
         <!-- Lightbox container -->
         <div id="lightbox">
           <div id="lightbox-container" class="lightbox-container">
             <button id="prev-btn" class="btn btn-primary">
               <i class="fa-solid fa-arrow-left"></i>
             </button>
-            <img id="lightbox-image" src="#" alt="">
+            <img id="lightbox-image" src="" alt="">
             <button id="next-btn" class="btn btn-primary">
               <i class="fa-solid fa-arrow-right"></i>
             </button>
@@ -50,16 +50,9 @@
         {{ end }}
     {{ end }}
     {{ end }}
+  <!-- <script src="{{ "js/search.js" | relURL }}"></script> -->
   <script>
-    const sidebar = document.getElementById('sidebar');
-    const hamburgerBtn = sidebar.querySelector('.fa-bars').closest('button');
-
-    hamburgerBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      sidebar.classList.toggle('sidebar-expanded');
-    });
-  </script>
-  <script>
+    // Search toggle
     const toggle = document.getElementById('search-toggle');
     const form = document.getElementById('search-form');
     const input = document.getElementById('search-input');
@@ -79,14 +72,54 @@
       }
     });
   
-    // Optional: close search if clicked outside
     document.addEventListener('click', (e) => {
       if (!form.contains(e.target) && !toggle.contains(e.target)) {
         form.classList.remove('expanded');
       }
     });
+
+    // RSS copy — handles both the nav button and any data-rss-path buttons
+    (function () {
+      const toast = document.getElementById('rss-toast');
+      if (!toast) return;
+
+      function copyFeed(url) {
+        navigator.clipboard.writeText(url).then(function () {
+          toast.classList.add('show');
+          setTimeout(function () { toast.classList.remove('show'); }, 2000);
+        }).catch(function () {
+          const ta = document.createElement('textarea');
+          ta.value = url;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          toast.classList.add('show');
+          setTimeout(function () { toast.classList.remove('show'); }, 2000);
+        });
+      }
+
+      // Main nav RSS button — always /feed.xml
+      const mainBtn = document.getElementById('rss-copy-btn');
+      if (mainBtn) {
+        mainBtn.addEventListener('click', function () {
+          copyFeed(window.location.origin + '/feed.xml');
+        });
+      }
+
+      // Any other RSS buttons with a data-rss-path attribute
+      document.querySelectorAll('[data-rss-path]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          copyFeed(window.location.origin + btn.getAttribute('data-rss-path'));
+        });
+      });
+    }());
   </script>
+  
   <script src="{{ "js/archive.js" | relURL }}"></script>
+  <script src="{{ "js/hamburger.js" | relURL }}"></script>
   <script src="{{ "js/lightbox.js" | relURL }}"></script>
   <script src="{{ "js/masonry.js" | relURL }}"></script>
 </body>
